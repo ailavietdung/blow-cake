@@ -7,12 +7,11 @@ type Props = {
 };
 
 const Candle = (props: Props) => {
-  const tens = Math.floor(props.elementPositions.length / 10);
   return (
     <div className="bd-candles">
       {props.elementPositions.map((position, i) => (
         <div
-          className={`${i < tens ? "candle-tens" : "candle"}`}
+          className={`${position.y == 40 ? "candle-tens" : "candle"}`}
           style={{
             position: "absolute",
             left: `${position.x}px`,

@@ -15,10 +15,10 @@ const Permission = () => {
   const [elementPositions, setElementPositions] = useState<
     { x: number; y: number }[]
   >([]);
-
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const handleBlow = () => {
     blowDetectedRef.current = true;
-    console.log("Blow detected!");
+    audioRef.current?.pause();
     setBlowDetected(true);
     // Проверяем, подключен ли микрофон к аудиоанализатору
     if (microphone && analyser && audioContext.state === "running") {
@@ -26,6 +26,10 @@ const Permission = () => {
       audioContext.suspend();
     }
   };
+
+  useEffect(() => {
+    audioRef.current?.play();
+  }, [isNext]);
 
   const initializeMicrophone = async () => {
     try {
@@ -73,7 +77,7 @@ const Permission = () => {
     const minX = 0;
     const maxX = 300;
     const centerX = (minX + maxX) / 2;
-    const number = 26;
+    const number = 27;
     const tens = Math.floor(number / 10);
     const units = number % 10;
     const positions: { x: number; y: number }[] = [];
@@ -132,6 +136,7 @@ const Permission = () => {
       )}
       {isNext && (
         <div className="w-[100dvw] h-[100dvh] bg-pink-100">
+          <audio ref={audioRef} src={"./audio.mp3"} />
           <Cake
             elementPositions={elementPositions}
             blowDetected={blowDetected}
