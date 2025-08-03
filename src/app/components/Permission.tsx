@@ -1,11 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { FiHeart } from "react-icons/fi";
 import Cake from "./Cake";
 
-type Props = {};
-
-const Permission = (props: Props) => {
+const Permission = () => {
   const addPermission = () => {
     initializeMicrophone();
   };
