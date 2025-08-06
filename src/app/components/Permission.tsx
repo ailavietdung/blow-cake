@@ -73,7 +73,7 @@ const Permission = () => {
   }, []);
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.1;
+      audioRef.current.volume = 0.5;
       audioRef.current.play();
     }
   }, [isNext]);
@@ -163,7 +163,7 @@ const Permission = () => {
                 "./sounds/explosion1.mp3",
                 "./sounds/explosion2.mp3",
               ],
-              volume: { min: 4, max: 8 },
+              volume: { min: 8, max: 8 },
             },
           }}
           style={{
