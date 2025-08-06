@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Cake from "./Cake";
+import Fireworks, { FireworksHandlers } from "@fireworks-js/react";
 
 const Permission = () => {
   const addPermission = () => {
@@ -16,13 +17,12 @@ const Permission = () => {
     { x: number; y: number }[]
   >([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const ref = useRef<FireworksHandlers>(null);
   const handleBlow = () => {
     blowDetectedRef.current = true;
     audioRef.current?.pause();
     setBlowDetected(true);
-    // Проверяем, подключен ли микрофон к аудиоанализатору
     if (microphone && analyser && audioContext.state === "running") {
-      // Останавливаем работу аудиоанализатора при обнаружении дуновения
       audioContext.suspend();
     }
   };
@@ -136,12 +136,39 @@ const Permission = () => {
       )}
       {isNext && (
         <div className="w-[100dvw] h-[100dvh] bg-pink-100">
-          <audio ref={audioRef} src={"./audio.mp3"} />
+          <audio ref={audioRef} src={"./sounds/audio.mp3"} loop={true} />
           <Cake
             elementPositions={elementPositions}
             blowDetected={blowDetected}
           />
         </div>
+      )}
+      {blowDetected && (
+        <Fireworks
+          ref={ref}
+          options={{
+            opacity: 1,
+            sound: {
+              enabled: true,
+              files: [
+                "./sounds/explosion0.mp3",
+                "./sounds/explosion1.mp3",
+                "./sounds/explosion2.mp3",
+              ],
+              volume: { min: 4, max: 8 },
+            },
+          }}
+          style={{
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            position: "fixed",
+            background: "#000",
+            zIndex: 100,
+            opacity: 0.9,
+          }}
+        />
       )}
     </>
   );
