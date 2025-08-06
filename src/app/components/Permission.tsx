@@ -5,7 +5,10 @@ import Fireworks, { FireworksHandlers } from "@fireworks-js/react";
 
 const Permission = () => {
   const addPermission = () => {
-    audioRef.current?.play();
+    if (audioRef.current) {
+      audioRef.current.volume = 0.1;
+      audioRef.current.play();
+    }
     initializeMicrophone();
   };
   let audioContext: AudioContext;
