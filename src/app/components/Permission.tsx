@@ -19,6 +19,7 @@ const Permission = () => {
   >([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const ref = useRef<FireworksHandlers>(null);
+
   const handleBlow = () => {
     blowDetectedRef.current = true;
     audioRef.current?.pause();
@@ -27,12 +28,6 @@ const Permission = () => {
       stream.getTracks().forEach((track) => track.stop());
     }
   };
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.1;
-      audioRef.current.play();
-    }
-  }, [isNext]);
 
   const initializeMicrophone = async () => {
     try {
@@ -76,6 +71,13 @@ const Permission = () => {
       }
     };
   }, []);
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.1;
+      audioRef.current.play();
+    }
+  }, [isNext]);
+
   const addPositionCandle = () => {
     const minX = 0;
     const maxX = 300;
@@ -85,9 +87,8 @@ const Permission = () => {
     const units = number % 10;
     const positions: { x: number; y: number }[] = [];
 
-    // Chia đều x cho hàng chục, bắt đầu từ giữa ra ngoài
     if (tens > 0) {
-      const stepXTens = tens > 1 ? 40 : 0; // khoảng cách giữa các vị trí, có thể điều chỉnh
+      const stepXTens = tens > 1 ? 40 : 0;
       const startX = centerX - ((tens - 1) / 2) * stepXTens;
       for (let i = 0; i < tens; i++) {
         positions.push({
@@ -97,9 +98,8 @@ const Permission = () => {
       }
     }
 
-    // Chia đều x cho hàng đơn vị, bắt đầu từ giữa ra ngoài
     if (units > 0) {
-      const stepXUnits = units > 1 ? 40 : 0; // khoảng cách giữa các vị trí, có thể điều chỉnh
+      const stepXUnits = units > 1 ? 40 : 0;
       const startX = centerX - ((units - 1) / 2) * stepXUnits;
       for (let i = 0; i < units; i++) {
         positions.push({
