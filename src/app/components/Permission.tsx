@@ -11,6 +11,7 @@ const Permission = () => {
   let audioContext: AudioContext;
   let analyser: AnalyserNode;
   let microphone: MediaStreamAudioSourceNode;
+  let stream: MediaStream;
   const blowDetectedRef = useRef(false);
   const [blowDetected, setBlowDetected] = useState(false);
   const [isNext, setIsNext] = useState(false);
@@ -23,14 +24,14 @@ const Permission = () => {
     blowDetectedRef.current = true;
     audioRef.current?.pause();
     setBlowDetected(true);
-    if (microphone && analyser && audioContext.state === "running") {
-      audioContext.suspend();
+    if (stream) {
+      stream.getTracks().forEach((track) => track.stop());
     }
   };
 
   const initializeMicrophone = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
       audioContext = new window.AudioContext();
