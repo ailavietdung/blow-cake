@@ -5,6 +5,7 @@ import Fireworks, { FireworksHandlers } from "@fireworks-js/react";
 
 const Permission = () => {
   const addPermission = () => {
+    audioRef.current?.play();
     initializeMicrophone();
   };
   let audioContext: AudioContext;
@@ -26,10 +27,6 @@ const Permission = () => {
       audioContext.suspend();
     }
   };
-
-  useEffect(() => {
-    audioRef.current?.play();
-  }, [isNext]);
 
   const initializeMicrophone = async () => {
     try {
