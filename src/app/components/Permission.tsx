@@ -18,11 +18,14 @@ const Permission = () => {
     { x: number; y: number }[]
   >([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const explosionRef = useRef<HTMLAudioElement | null>(null);
   const ref = useRef<FireworksHandlers>(null);
 
   const handleBlow = () => {
     blowDetectedRef.current = true;
     audioRef.current?.pause();
+    explosionRef.current?.play();
+
     setBlowDetected(true);
     if (stream) {
       stream.getTracks().forEach((track) => track.stop());
@@ -145,6 +148,13 @@ const Permission = () => {
             loop={true}
             style={{ visibility: "hidden" }}
           />
+          <audio
+            ref={explosionRef}
+            src={"./sounds/explosion0.mp3"}
+            loop={true}
+            style={{ visibility: "hidden" }}
+          />
+
           <Cake
             elementPositions={elementPositions}
             blowDetected={blowDetected}
@@ -156,15 +166,6 @@ const Permission = () => {
           ref={ref}
           options={{
             opacity: 1,
-            sound: {
-              enabled: true,
-              files: [
-                "./sounds/explosion0.mp3",
-                "./sounds/explosion1.mp3",
-                "./sounds/explosion2.mp3",
-              ],
-              volume: { min: 8, max: 8 },
-            },
           }}
           style={{
             top: 0,
