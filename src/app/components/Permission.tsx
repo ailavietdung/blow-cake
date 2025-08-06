@@ -150,7 +150,7 @@ const Permission = () => {
           />
           <audio
             ref={explosionRef}
-            src={"./sounds/explosion0.mp3"}
+            src={"./sounds/explosion.mp3"}
             loop={true}
             style={{ visibility: "hidden" }}
           />
