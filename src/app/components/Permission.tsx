@@ -107,6 +107,12 @@ const Permission = () => {
   };
   return (
     <>
+      <audio
+        ref={audioRef}
+        src={"./sounds/audio.mp3"}
+        loop={true}
+        style={{ visibility: "hidden" }}
+      />
       {!isNext && (
         <div className="w-[100dvw] h-[100dvh] bg-pink-100 flex items-center justify-center relative">
           <div className=" absolute top-8 text-center ">
@@ -133,7 +139,6 @@ const Permission = () => {
       )}
       {isNext && (
         <div className="w-[100dvw] h-[100dvh] bg-pink-100">
-          <audio ref={audioRef} src={"./sounds/audio.mp3"} loop={true} />
           <Cake
             elementPositions={elementPositions}
             blowDetected={blowDetected}
